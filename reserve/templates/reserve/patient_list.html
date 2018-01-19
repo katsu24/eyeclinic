@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}患者一覧{% endblock title %}
+
+{% block extrahead %}
+<style>
+table {
+  margin-top: 8px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<h3 class="page-header">患者一覧</h3>
+<a href="{% url 'reserve:patient_add' %}" class="btn btn-default btn-sm">追加</a>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>患者ID</th>
+            <th>氏名</th>
+            <th>氏名カナ</th>
+            <th>生年月日</th>
+            <th>性別</th>
+            <th>備考</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for patient in patients %}
+        <tr>
+            <td>{{ patient.pid }}</td>
+            <td>{{ patient.pname }}</td>
+            <td>{{ patient.pnamekana }}</td>
+            <td>{{ patient.birthdate }}</td>
+            <td>{{ patient.psex }}</td>
+            <td>{{ patient.memo }}</td>
+            <td>
+                <a href="{% url 'reserve:patient_mod' patient_id=patient.id %}" class="btn btn-default btn-sm">修正</a>
+                <a href="{% url 'reserve:patient_del' patient_id=patient.id %}" class="btn btn-default btn-sm">削除</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
